@@ -1,0 +1,13 @@
+Joseph 10020
+Edwin 5006
+Mark 2034
+Sheldon 2000
+William 1072
+Joey 1000
+Jerry 900
+Morgan 850
+Linh 800
+Ray 760
+Teppi 16
+Quinn 0
+-1

@@ -1,0 +1,10 @@
+TEST CASES:
+- returning the highest score in normal conditions and returning the
+highest score when the list is empty
+- inserting to the front, middle, and end of list
+- printing top 5 in normal conditions and when fewer than 5
+- print in normal conditions and when there are no entries
+- print user in normal conditions and when there is no user of that name
+- delete user: same as print user
+- keep top 10 in normal conditions and when fewer than 10
+- clear in normal conditions and when linked list is already empty

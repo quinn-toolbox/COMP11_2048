@@ -1,0 +1,149 @@
+#include <iostream>
+
+#include "game.h"
+#include "int-string.h"
+
+using namespace std;
+
+#define RANDOMSEED time(NULL)
+
+int Game::DIMEN;
+
+void Game::print_number(string num) {
+        printf("%-6s", num.c_str());
+}
+
+Game::Game() {
+
+}
+
+Game::~Game() {
+        delete[] game.board;
+}
+
+/* play()
+ * main function
+ */
+void Game::play() {
+        srand(RANDOMSEED);
+        dimen_input();
+        populate_board();
+        
+        while (game.lose == false) {
+                cin >> input;
+                allocate_movement();
+                new_num();
+                print_board();
+        }
+}
+
+void Game::dimen_input() {
+        cout << "Enter desired dimension of board: ";
+        cin >> DIMEN;
+        if (DIMEN >= 2) {
+                game.board = new string[DIMEN];
+        }
+        else {
+                cerr << "Dimension not valid.";
+                exit(1);
+        }
+}
+
+void Game::populate_board() {
+        for (int i = 0; i < DIMEN; i++) {
+                game.board[i] = EMPTY;
+        }
+        
+        int i = 0;
+        game.board[i] = "2";
+        i = 1;
+        while (game.board[i] != EMPTY) {
+                i = rand() % DIMEN;
+        }
+        game.board[i] = "2";
+  
+        print_board();
+}
+
+Game::Gameplay Game::new_num() {
+        int i;
+        do {
+                i = rand() % DIMEN;
+        } while (game.board[i] != EMPTY);
+
+        if (rand() % 100 <= PROB_2 * 100) {
+                game.board[i] = "2";
+                return game;
+        }
+        else {
+                game.board[i] = "4";
+                return game;
+        } 
+        
+}
+
+
+void Game::print_board() {
+        for (int i = 0; i < DIMEN; i++) {
+                print_number(game.board[i]);
+        }
+        cout << endl;
+}
+
+void Game::allocate_movement() {
+        if (input == LEFT) {
+                int i = 0, j = i + 1;
+                move(i, j);
+                for (int i = 0, j = i + 1; i < DIMEN; i++, j++) {
+                        if (game.board[i] != EMPTY and in_board(j)) {
+                                add_num(i, j);
+                        }
+                }
+                                move(i, j);
+                        }
+                        
+                }
+                              //move(i, j);
+        }
+}
+
+void Game::move(int i, int j) {
+        if (game.board[i] == EMPTY) {
+                for (j = i + 1; j < DIMEN; j++) {
+                        if (game.board[j] != EMPTY) {
+                                game.board[i] = game.board[j];
+                                game.board[j] = EMPTY;
+                        }
+                if (game.board[j] != EMPTY and in_board(j)) {
+                        game.board[i] = game.board[j];
+                        game.board[j] = EMPTY;
+                        }
+                }
+        else {
+                if (game.board[i] == game.board[j] and  \
+                            in_board(j)) {
+                                int n = string2int(game.board[j]) * 2;
+                                string m = int2string(n);
+                                game.board[i] = m;
+                                game.board[j] = EMPTY;
+                        }
+                }        
+                j++;
+        }
+}
+
+void Game::add_num(int i, int j) {
+        if (game.board[i] == game.board[j]) {
+                int n = string2int(game.board[j]) * 2;
+                string m = int2string(n);
+                game.board[i] = m;
+                game.board[j] = EMPTY;
+        }
+}
+
+bool Game::in_board(int j) {
+        if (j >= 0 and j < DIMEN) {
+                return true;
+        }
+        return false;
+}
